@@ -16,16 +16,32 @@ function App() {
 		setResult("");
 	};
 
-	const handleResult = () => {
-		switch (operator) {
-			case '+':
-				setResult(+operand1 + +operand2);
-				break;
-			case "-":
-				setResult(+operand1 - +operand2);
-				break;
-				default:
-				break;
+	const handleResult = (value) => {
+		const getResult = () => {
+			if (operator === "+") {
+				const result = +(operand1) + +(operand2);
+				setResult(String(result));
+			} else if (operator === "-") {
+				const result = +(operand1) - +(operand2);
+				setResult(String(result));
+			}
+		};
+
+		const installOperator = () => {
+			if (result === "") {
+				setOperator(value);
+			} else {
+				setOperand1(result);
+				setOperand2("");
+				setOperator(value);
+				setResult("");
+			}
+		};
+
+		if (value === "=") {
+			getResult();
+		} else {
+			installOperator();
 		}
 	};
 
@@ -33,24 +49,28 @@ function App() {
 		<>
 			<div className={styles.calculator}>
 				<div className={styles.display}>
-					{result === ''? operand1 + operator + operand2 : result}
+					{operand1 + operator + operand2}
 				</div>
+				<div className={styles.result}>{result}</div>
 				<div className={styles.buttons}>
 					<button className={styles["btn-grey"]} onClick={onClear}>
 						C
 					</button>
-					<button className={styles["btn-pink"]} onClick={()=> setOperator('+')}>
+					<button
+						className={styles["btn-pink"]}
+						onClick={() => handleResult("+")}
+					>
 						+
 					</button>
 					<button
 						className={styles["btn-pink"]}
-						onClick={()=> setOperator('-')}
+						onClick={() => handleResult("-")}
 					>
 						-
 					</button>
 					<button
 						className={styles["btn-pink"]}
-						onClick={handleResult}
+						onClick={() => handleResult("=")}
 					>
 						=
 					</button>
