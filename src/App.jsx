@@ -76,7 +76,7 @@ function App() {
 					</button>
 
 					{NUMS.map((namber) => (
-						<button
+						<button key={namber}
 							className={styles.button}
 							onClick={() => {
 								operator === ""
